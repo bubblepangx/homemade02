@@ -69,7 +69,8 @@ document.addEventListener('touchmove',e=>e.preventDefault(),{passive:false});
 
 // AUDIO
 const AX=window.AudioContext||window.webkitAudioContext;let ax=null,audioUnlocked=false;
-function ea(){if(!ax)ax=new AX();if(ax.state==='suspended')ax.resume();if(ax&&!audioUnlocked){try{const b=ax.createBuffer(1,1,22050),s=ax.createBufferSource();s.buffer=b;s.connect(ax.destination);s.start(0);audioUnlocked=true;}catch(e){}}}
+function ea(){if(!ax)try{ax=new AX();}catch(e){}if(!ax)return;if(ax.state==='suspended')ax.resume();if(!audioUnlocked){try{const b=ax.createBuffer(1,1,22050),s=ax.createBufferSource();s.buffer=b;s.connect(ax.destination);s.start(0);const o=ax.createOscillator(),g=ax.createGain();g.gain.value=0;o.connect(g);g.connect(ax.destination);o.start(0);o.stop(ax.currentTime+0.001);audioUnlocked=true;}catch(e){}}}
+['touchstart','touchend','click'].forEach(function(ev){document.addEventListener(ev,function(){ea();},{once:true,passive:true});});
 function pt(f,d,t='square',v=.06){if(!ax)return;try{const o=ax.createOscillator(),g=ax.createGain();o.type=t;o.frequency.value=f;g.gain.setValueAtTime(v,ax.currentTime);g.gain.exponentialRampToValueAtTime(.001,ax.currentTime+d);o.connect(g);g.connect(ax.destination);o.start();o.stop(ax.currentTime+d);}catch(e){}}
 const SFX={
 j(){pt(440,.06);setTimeout(()=>pt(660,.06),30);},
