@@ -1,0 +1,15 @@
+{
+  "name": "피카츄 어드벤처",
+  "short_name": "Pikachu",
+  "icons": [
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#FFD700"
+}
